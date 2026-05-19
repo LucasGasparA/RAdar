@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth, API } from '../contexts/AuthContext';
 import styles from './Login.module.css';
-
-const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 export default function Login() {
   const { user, loading, login } = useAuth();
@@ -56,13 +54,14 @@ export default function Login() {
         {error && <div className={styles.error}>{error}</div>}
 
         {/* Botão Google */}
-        <a
+        <button
+          type="button"
           className={styles.googleBtn}
-          href={`${BACKEND_URL}/auth/google`}
+          onClick={() => { window.location.href = `${API.defaults.baseURL}/auth/google`; }}
         >
           <GoogleIcon />
           Continuar com Google
-        </a>
+        </button>
 
         <div className={styles.divider}><span>ou</span></div>
 

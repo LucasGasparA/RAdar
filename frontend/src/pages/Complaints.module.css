@@ -1,0 +1,198 @@
+.page {
+  padding: 40px;
+}
+
+.loading, .empty {
+  padding: 40px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.header p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.addBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--nextfit-green);
+  color: #000;
+  font-weight: 600;
+  font-size: 13.5px;
+  padding: 10px 18px;
+  border-radius: var(--radius);
+  transition: background 0.2s;
+}
+
+.addBtn:hover { background: var(--nextfit-green-light); }
+
+.tableWrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.table thead tr {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+.table th {
+  padding: 11px 14px;
+  text-align: left;
+  font-weight: 500;
+  color: var(--text-secondary);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+}
+
+.table tbody tr:last-child { border-bottom: none; }
+.table tbody tr:hover { background: var(--bg-card); }
+
+.table td {
+  padding: 11px 14px;
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+.date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.statusTratativa {
+  background: rgba(255, 107, 53, 0.15);
+  color: #FF6B35;
+}
+
+.statusAguardando {
+  background: rgba(124, 77, 255, 0.15);
+  color: #9c77ff;
+}
+
+.statusFinalizado {
+  background: var(--nextfit-green-muted);
+  color: var(--nextfit-green);
+}
+
+.link {
+  color: var(--text-muted);
+  display: inline-flex;
+  transition: color 0.15s;
+}
+
+.link:hover { color: var(--nextfit-green); }
+
+.typeCliente {
+  background: rgba(0, 188, 212, 0.12);
+  color: #00BCD4;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.typeAluno {
+  background: rgba(255, 179, 0, 0.12);
+  color: #FFB300;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.origin {
+  background: rgba(255,255,255,0.05);
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.agent {
+  color: var(--text-secondary);
+  font-size: 12.5px;
+}
+
+.badgeYes {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--nextfit-green);
+  font-size: 11px;
+}
+
+.badgeNo {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.analysis {
+  color: var(--text-secondary);
+  font-size: 12px;
+  max-width: 200px;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.table tbody tr:hover .actions { opacity: 1; }
+
+.actions button {
+  background: transparent;
+  color: var(--text-muted);
+  padding: 5px;
+  border-radius: 4px;
+  display: flex;
+  transition: all 0.15s;
+}
+
+.actions button:hover { color: var(--text-primary); background: var(--bg-card-hover); }
+
+.deleteBtn:hover { color: #f44336 !important; }

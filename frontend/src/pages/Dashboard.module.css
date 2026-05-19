@@ -1,0 +1,96 @@
+.page {
+  padding: 40px;
+  max-width: 1100px;
+}
+
+.loading {
+  padding: 40px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.header {
+  margin-bottom: 32px;
+}
+
+.header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.header p {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  transition: all 0.2s;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+a .card {
+  cursor: pointer;
+}
+
+a .card:hover {
+  border-color: var(--accent, var(--border-strong));
+  background: var(--bg-card-hover);
+  transform: translateY(-1px);
+}
+
+.cardIcon {
+  color: var(--accent, var(--text-muted));
+  margin-bottom: 12px;
+}
+
+.cardValue {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  margin-bottom: 6px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.cardLabel {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.tip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 179, 0, 0.08);
+  border: 1px solid rgba(255, 179, 0, 0.2);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.tip svg { color: #FFB300; flex-shrink: 0; }
+
+.tip strong { color: var(--text-primary); }
+
+.tip a {
+  color: var(--nextfit-green);
+  font-weight: 500;
+}
+
+.tip a:hover { text-decoration: underline; }

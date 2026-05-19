@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: ra_nextfit_db
+    environment:
+      POSTGRES_USER: nextfit
+      POSTGRES_PASSWORD: nextfit123
+      POSTGRES_DB: ra_nextfit
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    container_name: ra_nextfit_backend
+    env_file: ./backend/.env
+    environment:
+      DATABASE_URL: postgresql://nextfit:nextfit123@postgres:5432/ra_nextfit
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  frontend:
+    build: ./frontend
+    container_name: ra_nextfit_frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  postgres_data:

@@ -1,0 +1,174 @@
+.page { padding: 40px; max-width: 800px; }
+
+.loading { padding: 40px; color: var(--text-muted); font-size: 14px; }
+
+.header {
+  margin-bottom: 32px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.header h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+.header p { font-size: 13px; color: var(--text-secondary); }
+
+.newBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--nextfit-green);
+  color: #000;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.newBtn:hover { background: var(--nextfit-green-light); }
+
+.createForm {
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.formInput {
+  background: var(--bg-input);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  color: var(--text-primary);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.formInput:focus { border-color: var(--nextfit-green-border); }
+.formInput::placeholder { color: var(--text-muted); }
+
+.formError { font-size: 12px; color: #ff6b6b; }
+
+.formActions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 4px; }
+
+.cancelBtn {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 13px;
+  padding: 7px 14px;
+  transition: all 0.15s;
+}
+.cancelBtn:hover { border-color: var(--border); color: var(--text-primary); }
+
+.section { margin-bottom: 32px; }
+
+.sectionTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pendingDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #FFB300;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.cards { display: flex; flex-direction: column; gap: 8px; }
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+}
+
+.pendingCard { border-color: rgba(255,179,0,0.2); }
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.info { flex: 1; }
+
+.nameRow { display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
+
+.name { font-size: 14px; font-weight: 500; }
+
+.adminBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: var(--nextfit-green-muted);
+  color: var(--nextfit-green);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 20px;
+}
+
+.email { font-size: 12px; color: var(--text-muted); }
+
+.approveBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--nextfit-green);
+  color: #000;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s;
+}
+
+.approveBtn:hover { background: var(--nextfit-green-light); }
+
+.cardActions { display: flex; gap: 6px; }
+
+.roleBtn, .revokeBtn {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  padding: 6px;
+  display: flex;
+  transition: all 0.15s;
+}
+
+.roleBtn:hover { color: var(--nextfit-green); border-color: var(--nextfit-green-border); }
+.revokeBtn:hover { color: #f44336; border-color: rgba(244,67,54,0.3); }
+.deleteBtn {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  padding: 6px;
+  display: flex;
+  transition: all 0.15s;
+}
+.deleteBtn:hover { color: #f44336; border-color: rgba(244,67,54,0.3); }

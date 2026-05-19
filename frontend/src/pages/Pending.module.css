@@ -1,0 +1,51 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: 16px;
+  padding: 48px;
+  max-width: 400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.icon { font-size: 48px; }
+
+h1 { font-size: 20px; font-weight: 600; }
+
+p { color: var(--text-secondary); font-size: 14px; line-height: 1.6; }
+
+.email {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--nextfit-green);
+  background: var(--nextfit-green-muted);
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+.logout {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  color: var(--text-secondary);
+  padding: 10px 24px;
+  font-size: 14px;
+  margin-top: 8px;
+  transition: all 0.2s;
+}
+
+.logout:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}

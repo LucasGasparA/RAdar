@@ -49,7 +49,7 @@ export async function initDB() {
 
     // Migrações para bancos já existentes
     await client.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS password_hash VARCHAR(255)`);
-    await client.query(`ALTER TABLE users DROP COLUMN IF EXISTS google_id`);
+    await client.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS google_id VARCHAR(100)`);
     await client.query(`ALTER TABLE users DROP COLUMN IF EXISTS avatar`);
     await client.query(`ALTER TABLE complaints ADD COLUMN IF NOT EXISTS complaint_text TEXT`);
 

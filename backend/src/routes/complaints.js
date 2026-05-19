@@ -25,6 +25,180 @@ router.get('/stats/overview', requireAuth, async (req, res) => {
   }
 });
 
+router.get('/stats/por-mes', requireAuth, async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        TO_CHAR(date, 'YYYY-MM') as mes,
+        TO_CHAR(date, 'Mon/YY') as mes_label,
+        COUNT(*) as total,
+        COUNT(*) FILTER (WHERE resolved = true) as resolvidos,
+        COUNT(*) FILTER (WHERE removed = true) as removidos
+      FROM complaints
+      WHERE date >= NOW() - INTERVAL '12 months'
+      GROUP BY TO_CHAR(date, 'YYYY-MM'), TO_CHAR(date, 'Mon/YY')
+      ORDER BY mes ASC
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erro ao buscar dados por mês' });
+  }
+});
+
+router.get('/stats/por-agente', requireAuth, async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        COALESCE(agent, 'Sem agente') as agente,
+        COUNT(*) as total,
+        COUNT(*) FILTER (WHERE resolved = true) as resolvidos,
+        COUNT(*) FILTER (WHERE responded = true) as respondidos,
+        ROUND(COUNT(*) FILTER (WHERE resolved = true)::numeric / NULLIF(COUNT(*), 0) * 100, 1) as taxa_resolucao
+      FROM complaints
+      GROUP BY agent
+      ORDER BY total DESC
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erro ao buscar dados por agente' });
+  }
+});
+
+router.get('/stats/por-origem', requireAuth, async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        COALESCE(NULLIF(origin, ''), 'Sem origem') as origem,
+        COUNT(*) as total
+      FROM complaints
+      GROUP BY origin
+      ORDER BY total DESC
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erro ao buscar dados por origem' });
+  }
+});
+
+router.get('/stats/comparativo-mensal', requireAuth, async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        COUNT(*) FILTER (WHERE date >= DATE_TRUNC('month', NOW())) as mes_atual,
+        COUNT(*) FILTER (WHERE date >= DATE_TRUNC('month', NOW() - INTERVAL '1 month')
+          AND date < DATE_TRUNC('month', NOW())) as mes_anterior,
+        COUNT(*) FILTER (WHERE resolved = true AND date >= DATE_TRUNC('month', NOW())) as resolvidos_mes_atual,
+        COUNT(*) FILTER (WHERE resolved = true
+          AND date >= DATE_TRUNC('month', NOW() - INTERVAL '1 month')
+          AND date < DATE_TRUNC('month', NOW())) as resolvidos_mes_anterior,
+        COUNT(*) FILTER (WHERE removed = true AND date >= DATE_TRUNC('month', NOW())) as removidos_mes_atual,
+        COUNT(*) FILTER (WHERE removed = true
+          AND date >= DATE_TRUNC('month', NOW() - INTERVAL '1 month')
+          AND date < DATE_TRUNC('month', NOW())) as removidos_mes_anterior
+      FROM complaints
+    `);
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erro ao buscar comparativo mensal' });
+  }
+});
+
+router.get('/stats/timeline', requireAuth, async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        DATE_TRUNC('week', date) AS week,
+        COUNT(*) AS total,
+        COUNT(*) FILTER (WHERE resolved = true) AS resolvidos,
+        COUNT(*) FILTER (WHERE removed = true) AS removidos
+      FROM complaints
+      WHERE date >= NOW() - INTERVAL '90 days'
+      GROUP BY week
+      ORDER BY week ASC
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erro ao buscar timeline' });
+  }
+});
+
+router.get('/stats/by-origin', requireAuth, async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        COALESCE(NULLIF(origin, ''), 'Não informado') AS origin,
+        COUNT(*) AS total,
+        COUNT(*) FILTER (WHERE resolved = true) AS resolvidos,
+        COUNT(*) FILTER (WHERE removed = false AND resolved = false) AS em_aberto,
+        ROUND(
+          COUNT(*) FILTER (WHERE resolved = true)::numeric / NULLIF(COUNT(*), 0) * 100, 1
+        ) AS taxa_resolucao
+      FROM complaints
+      WHERE removed = false
+      GROUP BY origin
+      ORDER BY total DESC
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erro ao buscar stats por origem' });
+  }
+});
+
+router.get('/stats/by-agent', requireAuth, async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        COALESCE(NULLIF(agent, ''), 'Não atribuído') AS agent,
+        COUNT(*) AS total,
+        COUNT(*) FILTER (WHERE resolved = true) AS resolvidos,
+        COUNT(*) FILTER (WHERE client_evaluated = true) AS avaliados,
+        ROUND(
+          COUNT(*) FILTER (WHERE resolved = true)::numeric / NULLIF(COUNT(*), 0) * 100, 1
+        ) AS taxa_resolucao
+      FROM complaints
+      WHERE removed = false
+      GROUP BY agent
+      ORDER BY total DESC
+      LIMIT 15
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erro ao buscar stats por agente' });
+  }
+});
+
+router.get('/stats/monthly', requireAuth, async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        TO_CHAR(DATE_TRUNC('month', date), 'YYYY-MM') AS month,
+        TO_CHAR(DATE_TRUNC('month', date), 'Mon/YY') AS label,
+        COUNT(*) AS total,
+        COUNT(*) FILTER (WHERE resolved = true) AS resolvidos,
+        COUNT(*) FILTER (WHERE removed = true) AS removidos,
+        COUNT(*) FILTER (WHERE client_evaluated = true) AS avaliados,
+        ROUND(
+          COUNT(*) FILTER (WHERE resolved = true)::numeric / NULLIF(COUNT(*), 0) * 100, 1
+        ) AS taxa_resolucao
+      FROM complaints
+      WHERE date >= NOW() - INTERVAL '12 months'
+      GROUP BY DATE_TRUNC('month', date)
+      ORDER BY DATE_TRUNC('month', date) ASC
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erro ao buscar stats mensais' });
+  }
+});
+
 router.get('/', requireAuth, async (req, res) => {
   try {
     const { status, resolved, responded, client_evaluated, removed } = req.query;

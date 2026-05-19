@@ -7,6 +7,7 @@ import { pool, initDB } from './db/index.js';
 import authRoutes from './routes/auth.js';
 import complaintsRoutes from './routes/complaints.js';
 import adminRoutes from './routes/admin.js';
+import aiRoutes from './routes/ai.js';
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.use(session({
 app.use('/auth', authRoutes);
 app.use('/api/complaints', complaintsRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/ai', aiRoutes);
 
 app.get('/health', (req, res) => res.json({ ok: true }));
 

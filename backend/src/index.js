@@ -21,12 +21,20 @@ app.use(cors({
 
 app.use(express.json());
 
+const isProd = process.env.NODE_ENV === 'production';
+
+app.set('trust proxy', 1);
+
 app.use(session({
   store: new PgSession({ pool, tableName: 'session', createTableIfMissing: true }),
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 },
+  cookie: {
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    secure: isProd,
+    sameSite: isProd ? 'none' : 'lax',
+  },
 }));
 
 app.use('/auth', authRoutes);

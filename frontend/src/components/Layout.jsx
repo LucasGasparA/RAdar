@@ -2,7 +2,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import {
   LayoutDashboard, List, Clock, CheckCircle,
-  Star, Users, LogOut, AlertCircle
+  Star, Users, LogOut, Trash2
 } from 'lucide-react';
 import styles from './Layout.module.css';
 
@@ -12,6 +12,7 @@ const navItems = [
   { to: '/complaints/open', icon: Clock, label: 'Em Aberto' },
   { to: '/complaints/resolved', icon: CheckCircle, label: 'Resolvidos' },
   { to: '/complaints/no-eval', icon: Star, label: 'Sem Avaliação' },
+  { to: '/complaints/removed', icon: Trash2, label: 'Removidos' },
 ];
 
 export default function Layout() {
@@ -60,9 +61,6 @@ export default function Layout() {
         </nav>
 
         <div className={styles.userArea}>
-          {user?.avatar && (
-            <img src={user.avatar} alt={user.name} className={styles.avatar} />
-          )}
           <div className={styles.userInfo}>
             <span className={styles.userName}>{user?.name?.split(' ')[0]}</span>
             <span className={styles.userRole}>{user?.role === 'admin' ? 'Admin' : 'Membro'}</span>

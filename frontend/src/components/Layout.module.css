@@ -1,4 +1,4 @@
-.wrapper {
+﻿.wrapper {
   display: flex;
   min-height: 100vh;
 }
@@ -26,7 +26,7 @@
 .brandIcon {
   width: 34px;
   height: 34px;
-  background: var(--nextfit-green);
+  background: var(--nextfit-purple);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -75,8 +75,8 @@
 }
 
 .navItem.active {
-  background: var(--nextfit-green-muted);
-  color: var(--nextfit-green);
+  background: var(--nextfit-purple-muted);
+  color: var(--nextfit-purple);
   font-weight: 500;
 }
 

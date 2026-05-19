@@ -21,7 +21,7 @@ app.use(cors({
 app.use(express.json());
 
 app.use(session({
-  store: new PgSession({ pool, tableName: 'session' }),
+  store: new PgSession({ pool, tableName: 'session', createTableIfMissing: true }),
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,

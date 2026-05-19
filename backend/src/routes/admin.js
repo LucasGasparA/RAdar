@@ -38,6 +38,8 @@ router.delete('/users/:id', requireAdmin, async (req, res) => {
     return res.status(400).json({ error: 'Não é possível excluir sua própria conta' });
   }
   try {
+    // Desvincula reclamações antes de excluir o usuário
+    await pool.query('UPDATE complaints SET created_by=NULL WHERE created_by=$1', [req.params.id]);
     await pool.query('DELETE FROM users WHERE id=$1', [req.params.id]);
     res.json({ success: true });
   } catch {

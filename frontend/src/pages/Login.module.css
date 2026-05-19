@@ -1,4 +1,4 @@
-.container {
+﻿.container {
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -44,7 +44,7 @@
 .logoIcon {
   width: 40px;
   height: 40px;
-  background: var(--nextfit-green);
+  background: var(--nextfit-purple);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -107,7 +107,7 @@
 }
 
 .input:focus {
-  border-color: var(--nextfit-green-border);
+  border-color: var(--nextfit-purple-border);
 }
 
 .input::placeholder {
@@ -115,7 +115,7 @@
 }
 
 .submitBtn {
-  background: var(--nextfit-green);
+  background: var(--nextfit-purple);
   border: none;
   border-radius: var(--radius);
   padding: 14px;
@@ -129,7 +129,7 @@
 }
 
 .submitBtn:hover:not(:disabled) {
-  background: var(--nextfit-green-light);
+  background: var(--nextfit-purple-light);
 }
 
 .submitBtn:disabled {

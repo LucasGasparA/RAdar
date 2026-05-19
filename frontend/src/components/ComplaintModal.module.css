@@ -1,4 +1,4 @@
-.overlay {
+﻿.overlay {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.7);
@@ -15,7 +15,7 @@
   border: 1px solid var(--border-strong);
   border-radius: 14px;
   width: 100%;
-  max-width: 600px;
+  max-width: 740px;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
@@ -89,7 +89,7 @@
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
-  border-color: var(--nextfit-green-border);
+  border-color: var(--nextfit-purple-border);
   box-shadow: 0 0 0 3px rgba(0,200,83,0.07);
 }
 
@@ -119,7 +119,7 @@
 .checkboxItem:hover { border-color: var(--border-strong); color: var(--text-primary); }
 
 .checkboxItem input[type="checkbox"] {
-  accent-color: var(--nextfit-green);
+  accent-color: var(--nextfit-purple);
   width: 15px;
   height: 15px;
 }
@@ -154,7 +154,7 @@
 .cancelBtn:hover { color: var(--text-primary); }
 
 .saveBtn {
-  background: var(--nextfit-green);
+  background: var(--nextfit-purple);
   color: #000;
   font-weight: 600;
   font-size: 13.5px;
@@ -163,5 +163,5 @@
   transition: background 0.2s;
 }
 
-.saveBtn:hover:not(:disabled) { background: var(--nextfit-green-light); }
+.saveBtn:hover:not(:disabled) { background: var(--nextfit-purple-light); }
 .saveBtn:disabled { opacity: 0.5; cursor: not-allowed; }

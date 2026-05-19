@@ -25,11 +25,6 @@ export async function initDB() {
       )
     `);
 
-    // Migração: adiciona/remove colunas se a tabela já existia com o schema antigo
-    await client.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS password_hash VARCHAR(255)`);
-    await client.query(`ALTER TABLE users DROP COLUMN IF EXISTS google_id`);
-    await client.query(`ALTER TABLE users DROP COLUMN IF EXISTS avatar`);
-
     await client.query(`
       CREATE TABLE IF NOT EXISTS complaints (
         id SERIAL PRIMARY KEY,
@@ -40,16 +35,23 @@ export async function initDB() {
         client_type VARCHAR(50) DEFAULT 'Cliente',
         origin VARCHAR(100),
         agent VARCHAR(255),
+        complaint_text TEXT,
         removed BOOLEAN DEFAULT FALSE,
         resolved BOOLEAN DEFAULT FALSE,
         responded BOOLEAN DEFAULT FALSE,
         client_evaluated BOOLEAN DEFAULT FALSE,
         analysis TEXT,
-        created_by INTEGER REFERENCES users(id),
+        created_by INTEGER REFERENCES users(id) ON DELETE SET NULL,
         created_at TIMESTAMP DEFAULT NOW(),
         updated_at TIMESTAMP DEFAULT NOW()
       )
     `);
+
+    // Migrações para bancos já existentes
+    await client.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS password_hash VARCHAR(255)`);
+    await client.query(`ALTER TABLE users DROP COLUMN IF EXISTS google_id`);
+    await client.query(`ALTER TABLE users DROP COLUMN IF EXISTS avatar`);
+    await client.query(`ALTER TABLE complaints ADD COLUMN IF NOT EXISTS complaint_text TEXT`);
 
     // Cria admin padrão se não houver usuários
     const count = await client.query('SELECT COUNT(*) FROM users');

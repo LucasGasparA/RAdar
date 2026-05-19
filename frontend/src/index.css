@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  --nextfit-green: #00C853;
-  --nextfit-green-dark: #00A843;
-  --nextfit-green-light: #00E676;
-  --nextfit-green-muted: rgba(0, 200, 83, 0.12);
-  --nextfit-green-border: rgba(0, 200, 83, 0.25);
+  --nextfit-purple: #7C4DFF;
+  --nextfit-purple-dark: #6535E8;
+  --nextfit-purple-light: #9C6FFF;
+  --nextfit-purple-muted: rgba(124, 77, 255, 0.12);
+  --nextfit-purple-border: rgba(124, 77, 255, 0.25);
 
   --bg-primary: #0D0D0D;
   --bg-secondary: #141414;
@@ -22,7 +22,7 @@
 
   --status-tratativa: #FF6B35;
   --status-aguardando: #7C4DFF;
-  --status-finalizado: #00C853;
+  --status-finalizado: #7C4DFF;
 
   --radius: 10px;
   --radius-sm: 6px;

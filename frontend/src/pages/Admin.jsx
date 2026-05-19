@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { API } from '../contexts/AuthContext';
 import { useAuth } from '../contexts/AuthContext';
 import { Check, X, Shield, User, Plus, Trash2 } from 'lucide-react';
@@ -8,40 +8,42 @@ export default function Admin() {
   const { user: me } = useAuth();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [pageError, setPageError] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [formError, setFormError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [busy, setBusy] = useState(null); // id do usuário com operação em andamento
 
-  const fetchUsers = () => {
+  const fetchUsers = useCallback(() => {
     API.get('/api/admin/users')
       .then(r => setUsers(r.data))
+      .catch(() => setPageError('Não foi possível carregar os usuários.'))
       .finally(() => setLoading(false));
+  }, []);
+
+  useEffect(() => { fetchUsers(); }, [fetchUsers]);
+
+  const withBusy = (id, fn) => async () => {
+    if (busy) return;
+    setBusy(id);
+    try { await fn(); fetchUsers(); }
+    catch (err) { alert(err.response?.data?.error || 'Erro ao realizar operação.'); }
+    finally { setBusy(null); }
   };
 
-  useEffect(() => { fetchUsers(); }, []);
-
-  const approve = async (id) => {
-    await API.patch(`/api/admin/users/${id}/approve`);
-    fetchUsers();
-  };
-
-  const revoke = async (id) => {
+  const approve = (id) => withBusy(id, () => API.patch(`/api/admin/users/${id}/approve`))();
+  const revoke = (id) => {
     if (!confirm('Revogar acesso deste usuário?')) return;
-    await API.patch(`/api/admin/users/${id}/revoke`);
-    fetchUsers();
+    withBusy(id, () => API.patch(`/api/admin/users/${id}/revoke`))();
   };
-
-  const toggleRole = async (id, currentRole) => {
+  const toggleRole = (id, currentRole) => {
     const role = currentRole === 'admin' ? 'member' : 'admin';
-    await API.patch(`/api/admin/users/${id}/role`, { role });
-    fetchUsers();
+    withBusy(id, () => API.patch(`/api/admin/users/${id}/role`, { role }))();
   };
-
-  const deleteUser = async (id, name) => {
+  const deleteUser = (id, name) => {
     if (!confirm(`Excluir o usuário "${name}"? Esta ação não pode ser desfeita.`)) return;
-    await API.delete(`/api/admin/users/${id}`);
-    fetchUsers();
+    withBusy(id, () => API.delete(`/api/admin/users/${id}`))();
   };
 
   const createUser = async (e) => {
@@ -113,6 +115,8 @@ export default function Admin() {
 
       {loading ? (
         <div className={styles.loading}>Carregando...</div>
+      ) : pageError ? (
+        <div className={styles.pageError}>{pageError}</div>
       ) : (
         <>
           {pending.length > 0 && (
@@ -128,8 +132,12 @@ export default function Admin() {
                       <span className={styles.name}>{u.name}</span>
                       <span className={styles.email}>{u.email}</span>
                     </div>
-                    <button className={styles.approveBtn} onClick={() => approve(u.id)}>
-                      <Check size={14} /> Aprovar
+                    <button
+                      className={styles.approveBtn}
+                      onClick={() => approve(u.id)}
+                      disabled={busy === u.id}
+                    >
+                      <Check size={14} /> {busy === u.id ? '...' : 'Aprovar'}
                     </button>
                   </div>
                 ))}
@@ -156,6 +164,7 @@ export default function Admin() {
                       <button
                         className={styles.roleBtn}
                         onClick={() => toggleRole(u.id, u.role)}
+                        disabled={busy === u.id}
                         title={u.role === 'admin' ? 'Remover admin' : 'Tornar admin'}
                       >
                         {u.role === 'admin' ? <User size={13} /> : <Shield size={13} />}
@@ -163,6 +172,7 @@ export default function Admin() {
                       <button
                         className={styles.revokeBtn}
                         onClick={() => revoke(u.id)}
+                        disabled={busy === u.id}
                         title="Revogar acesso"
                       >
                         <X size={13} />
@@ -170,6 +180,7 @@ export default function Admin() {
                       <button
                         className={styles.deleteBtn}
                         onClick={() => deleteUser(u.id, u.name)}
+                        disabled={busy === u.id}
                         title="Excluir usuário"
                       >
                         <Trash2 size={13} />

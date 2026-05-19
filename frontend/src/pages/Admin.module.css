@@ -1,6 +1,15 @@
-.page { padding: 40px; max-width: 800px; }
+﻿.page { padding: 40px; max-width: 800px; }
 
 .loading { padding: 40px; color: var(--text-muted); font-size: 14px; }
+
+.pageError {
+  padding: 16px 20px;
+  background: rgba(244,67,54,0.08);
+  border: 1px solid rgba(244,67,54,0.2);
+  border-radius: var(--radius);
+  color: #ff6b6b;
+  font-size: 14px;
+}
 
 .header {
   margin-bottom: 32px;
@@ -15,7 +24,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  background: var(--nextfit-green);
+  background: var(--nextfit-purple);
   color: #000;
   font-size: 13px;
   font-weight: 600;
@@ -24,7 +33,7 @@
   transition: background 0.15s;
   flex-shrink: 0;
 }
-.newBtn:hover { background: var(--nextfit-green-light); }
+.newBtn:hover { background: var(--nextfit-purple-light); }
 
 .createForm {
   background: var(--bg-card);
@@ -47,7 +56,7 @@
   outline: none;
   transition: border-color 0.2s;
 }
-.formInput:focus { border-color: var(--nextfit-green-border); }
+.formInput:focus { border-color: var(--nextfit-purple-border); }
 .formInput::placeholder { color: var(--text-muted); }
 
 .formError { font-size: 12px; color: #ff6b6b; }
@@ -123,8 +132,8 @@
   display: inline-flex;
   align-items: center;
   gap: 3px;
-  background: var(--nextfit-green-muted);
-  color: var(--nextfit-green);
+  background: var(--nextfit-purple-muted);
+  color: var(--nextfit-purple);
   font-size: 10px;
   font-weight: 600;
   padding: 2px 7px;
@@ -137,7 +146,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  background: var(--nextfit-green);
+  background: var(--nextfit-purple);
   color: #000;
   font-size: 13px;
   font-weight: 600;
@@ -146,7 +155,7 @@
   transition: background 0.15s;
 }
 
-.approveBtn:hover { background: var(--nextfit-green-light); }
+.approveBtn:hover { background: var(--nextfit-purple-light); }
 
 .cardActions { display: flex; gap: 6px; }
 
@@ -160,7 +169,7 @@
   transition: all 0.15s;
 }
 
-.roleBtn:hover { color: var(--nextfit-green); border-color: var(--nextfit-green-border); }
+.roleBtn:hover { color: var(--nextfit-purple); border-color: var(--nextfit-purple-border); }
 .revokeBtn:hover { color: #f44336; border-color: rgba(244,67,54,0.3); }
 .deleteBtn {
   background: transparent;

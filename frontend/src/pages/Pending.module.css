@@ -1,4 +1,4 @@
-.container {
+﻿.container {
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -28,8 +28,8 @@ p { color: var(--text-secondary); font-size: 14px; line-height: 1.6; }
 .email {
   font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
-  color: var(--nextfit-green);
-  background: var(--nextfit-green-muted);
+  color: var(--nextfit-purple);
+  background: var(--nextfit-purple-muted);
   padding: 6px 12px;
   border-radius: 6px;
 }

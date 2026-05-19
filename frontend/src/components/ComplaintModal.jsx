@@ -13,17 +13,18 @@ const defaults = {
   client_type: 'Cliente',
   origin: 'Suporte Técnico',
   agent: '',
+  complaint_text: '',
+  analysis: '',
   removed: false,
   resolved: false,
   responded: false,
   client_evaluated: false,
-  analysis: '',
 };
 
 export default function ComplaintModal({ complaint, onClose, onSave }) {
   const [form, setForm] = useState(complaint ? {
     ...complaint,
-    date: complaint.date?.split('T')[0] || defaults.date,
+    date: complaint.date?.slice(0, 10) || defaults.date,
   } : defaults);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -57,9 +58,10 @@ export default function ComplaintModal({ complaint, onClose, onSave }) {
         </div>
 
         <div className={styles.body}>
+          {/* Linha 1: campos rápidos */}
           <div className={styles.row}>
             <div className={styles.field}>
-              <label>Data</label>
+              <label>Data *</label>
               <input type="date" value={form.date} onChange={e => set('date', e.target.value)} />
             </div>
             <div className={styles.field}>
@@ -79,6 +81,7 @@ export default function ComplaintModal({ complaint, onClose, onSave }) {
             </div>
           </div>
 
+          {/* Linha 2: origem e agente */}
           <div className={styles.row}>
             <div className={styles.field}>
               <label>Origem</label>
@@ -87,7 +90,7 @@ export default function ComplaintModal({ complaint, onClose, onSave }) {
               </select>
             </div>
             <div className={styles.field}>
-              <label>Agente</label>
+              <label>Agente responsável</label>
               <input
                 type="text"
                 placeholder="Nome do agente"
@@ -97,32 +100,57 @@ export default function ComplaintModal({ complaint, onClose, onSave }) {
             </div>
           </div>
 
+          {/* Links */}
+          <div className={styles.row}>
+            <div className={styles.field}>
+              <label>Link da reclamação (RA)</label>
+              <input
+                type="text"
+                placeholder="reclameaqui.com.br/..."
+                value={form.link}
+                onChange={e => set('link', e.target.value)}
+              />
+            </div>
+            <div className={styles.field}>
+              <label>Link do print</label>
+              <input
+                type="text"
+                placeholder="https://..."
+                value={form.print_url}
+                onChange={e => set('print_url', e.target.value)}
+              />
+            </div>
+          </div>
+
+          {/* Texto da reclamação */}
           <div className={styles.field}>
-            <label>Link da reclamação</label>
-            <input
-              type="text"
-              placeholder="reclameaqui.com.br/..."
-              value={form.link}
-              onChange={e => set('link', e.target.value)}
+            <label>Reclamação do cliente</label>
+            <textarea
+              placeholder="Cole aqui o texto da reclamação do Reclame Aqui..."
+              value={form.complaint_text}
+              onChange={e => set('complaint_text', e.target.value)}
+              rows={4}
             />
           </div>
 
+          {/* Análise do caso */}
           <div className={styles.field}>
-            <label>Link do print</label>
-            <input
-              type="text"
-              placeholder="https://imgur.com/..."
-              value={form.print_url}
-              onChange={e => set('print_url', e.target.value)}
+            <label>Análise do caso</label>
+            <textarea
+              placeholder="Observações e análise do responsável pelo atendimento..."
+              value={form.analysis}
+              onChange={e => set('analysis', e.target.value)}
+              rows={3}
             />
           </div>
 
+          {/* Checkboxes */}
           <div className={styles.checkboxGrid}>
             {[
-              ['removed', 'Removido'],
               ['resolved', 'Resolvido'],
               ['responded', 'Respondido'],
               ['client_evaluated', 'Cliente avaliou'],
+              ['removed', 'Removido do RA'],
             ].map(([key, label]) => (
               <label key={key} className={styles.checkboxItem}>
                 <input
@@ -135,23 +163,13 @@ export default function ComplaintModal({ complaint, onClose, onSave }) {
             ))}
           </div>
 
-          <div className={styles.field}>
-            <label>Análise</label>
-            <textarea
-              placeholder="Observações sobre este caso..."
-              value={form.analysis}
-              onChange={e => set('analysis', e.target.value)}
-              rows={3}
-            />
-          </div>
-
           {error && <div className={styles.error}>{error}</div>}
         </div>
 
         <div className={styles.footer}>
           <button className={styles.cancelBtn} onClick={onClose}>Cancelar</button>
           <button className={styles.saveBtn} onClick={handleSubmit} disabled={saving}>
-            {saving ? 'Salvando...' : 'Salvar'}
+            {saving ? 'Salvando...' : 'Salvar caso'}
           </button>
         </div>
       </div>

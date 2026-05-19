@@ -1,4 +1,4 @@
-.page {
+﻿.page {
   padding: 40px;
   max-width: 1100px;
 }
@@ -6,6 +6,15 @@
 .loading {
   padding: 40px;
   color: var(--text-muted);
+  font-size: 14px;
+}
+
+.error {
+  padding: 16px 20px;
+  background: rgba(244,67,54,0.08);
+  border: 1px solid rgba(244,67,54,0.2);
+  border-radius: var(--radius);
+  color: #ff6b6b;
   font-size: 14px;
 }
 
@@ -89,7 +98,7 @@ a .card:hover {
 .tip strong { color: var(--text-primary); }
 
 .tip a {
-  color: var(--nextfit-green);
+  color: var(--nextfit-purple);
   font-weight: 500;
 }
 
